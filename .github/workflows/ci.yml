@@ -1,0 +1,40 @@
+on: [push, pull_request]
+
+name: CI
+
+jobs:
+  prettier:
+    name: Check code style
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: "14"
+      - run: npx prettier --check --print-width 85 .
+  validate_html:
+    name: Validate HTML
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+      - run: |
+          shopt -s globstar
+          for file in static/**/*.html; do
+            curl -fsS "https://validator.w3.org/nu/?out=gnu" \
+              -H "Content-Type: text/html; charset=utf-8"    \
+              --data-binary "@$file"                         \
+                | { ! grep -z error; }
+          done
+  validate_css:
+    name: Validate CSS
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+      - run: |
+          shopt -s globstar
+          for file in static/**/*.css; do
+            curl -fsS "https://jigsaw.w3.org/css-validator/validator"       \
+              -H "Content-Type: multipart/form-data"                        \
+              -F warning=2 -F output=text -F profile=css3 -F "text=<$file"  \
+                | { ! grep -z errors; }
+          done
