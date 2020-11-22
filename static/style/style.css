@@ -119,6 +119,16 @@ footer {
   font-size: 0.8em;
 }
 
+.costume-credit {
+  position: fixed;
+  bottom: 2%;
+  left: 2%;
+  z-index: -1;
+
+  color: #b2bec3;
+  font-size: 1rem;
+}
+
 code {
   font-family: "Overpass Mono", monospace;
   background-color: #2d3436;
