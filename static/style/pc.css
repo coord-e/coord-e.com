@@ -1,0 +1,27 @@
+html {
+  font-size: 1vw;
+}
+
+ul,
+dl {
+  padding-left: 2rem;
+}
+
+.bio {
+  position: absolute;
+  top: 5%;
+  right: 5%;
+  width: 65vw;
+}
+
+.ayano {
+  position: fixed;
+  bottom: -40%;
+  left: 5%;
+  height: 130vh;
+  z-index: -1;
+}
+
+.preference-chart {
+  width: 49%;
+}
