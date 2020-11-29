@@ -1,6 +1,7 @@
 {-# LANGUAGE BlockArguments #-}
 {-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE ViewPatterns #-}
 
 module Main where
 
@@ -9,7 +10,15 @@ import Hakyll
 import Hakyll.Contrib.LaTeX (initFormulaCompilerSVG)
 import Image.LaTeX.Render (EnvironmentOptions (..), defaultEnv)
 import Image.LaTeX.Render.Pandoc (PandocFormulaOptions (..), defaultPandocFormulaOptions)
-import System.FilePath.Posix (dropFileName, splitDirectories)
+import System.FilePath.Posix
+  ( dropFileName,
+    splitDirectories,
+    takeBaseName,
+    takeDirectory,
+    takeExtension,
+    (<.>),
+    (</>),
+  )
 import Text.Link.Pandoc (addAnchorLinkToHeadings, processEmbedLinks)
 import Text.Pandoc (Pandoc)
 import Text.Pandoc.Options (WriterOptions (..))
@@ -22,6 +31,22 @@ main = do
       route . gsubRoute "asset/" $ const ""
       compile copyFileCompiler
 
+    match ("content/post/*/*" .&&. imageFile) do
+      route $ gsubRoute "content/" (const "")
+      compile copyFileCompiler
+
+    match ("content/post/*.md" .||. "content/post/*/index.md") do
+      route $
+        unIndexRoute
+          `composeRoutes` gsubRoute "content/" (const "")
+          `composeRoutes` setExtension "html"
+      compile $
+        markdownCompiler renderFormulae
+          >>= subDirUrls
+          >>= loadAndApplyTemplate "template/post.html" defaultContext
+          >>= loadAndApplyTemplate "template/default.html" (fragmentsContext <> defaultContext)
+          >>= relativizeUrls
+
     create ["post/index.html"] do
       route idRoute
       compile $
@@ -30,22 +55,32 @@ main = do
           >>= loadAndApplyTemplate "template/default.html" (indexTitleContext <> fragmentsContext <> defaultContext)
           >>= relativizeUrls
 
-    match "content/post/*.md" do
-      route $ gsubRoute "content/" (const "") `composeRoutes` setExtension "html"
-      compile $
-        markdownCompiler renderFormulae
-          >>= loadAndApplyTemplate "template/post.html" defaultContext
-          >>= loadAndApplyTemplate "template/default.html" (fragmentsContext <> defaultContext)
-          >>= relativizeUrls
-
     match "template/*" do
       compile templateBodyCompiler
+
+imageFile :: Pattern
+imageFile = fromRegex "\\.(png|jpg|svg)$"
+
+unIndexRoute :: Routes
+unIndexRoute = customRoute f
+  where
+    f (toFilePath -> p)
+      | takeBaseName p == "index" = takeDirectory p <.> takeExtension p
+      | otherwise = p
 
 latexEnvOptions :: EnvironmentOptions
 latexEnvOptions =
   defaultEnv
     { latexFontSize = 14
     }
+
+subDirUrls :: Item String -> Compiler (Item String)
+subDirUrls item = do
+  path <- getJustRoute $ itemIdentifier item
+  pure $ fmap (withUrls $ f path) item
+  where
+    f p ('.' : '/' : url) = '.' : '/' : takeBaseName p </> url
+    f _ url = url
 
 markdownCompiler ::
   (PandocFormulaOptions -> Pandoc -> Compiler Pandoc) ->
@@ -76,7 +111,7 @@ fragmentsContext = listFieldWith "fragments" fields items
 postsContext :: Context String
 postsContext = listField "posts" defaultContext (recentFirst =<< loadAll pat)
   where
-    pat = "content/post/*" <> complement "**/index.html"
+    pat = "content/post/*.md" .||. "content/post/*/index.md"
 
 indexTitleContext :: Context String
 indexTitleContext = field "title" f

@@ -280,3 +280,16 @@ code .co {
 .bio {
   padding-bottom: 5rem;
 }
+
+figure {
+  margin: 2.5rem;
+}
+
+figure > img {
+  max-width: 100%;
+}
+
+figure > figcaption {
+  color: #636e72;
+  text-align: center;
+}
