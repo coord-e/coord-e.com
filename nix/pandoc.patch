@@ -18,6 +18,27 @@ index fde8a9abe..d774f5452 100644
                        }
  
  instance HasSyntaxExtensions WriterOptions where
+diff --git a/src/Text/Pandoc/Readers/Markdown.hs b/src/Text/Pandoc/Readers/Markdown.hs
+index 9b6671f1b..130d93c93 100644
+--- a/src/Text/Pandoc/Readers/Markdown.hs
++++ b/src/Text/Pandoc/Readers/Markdown.hs
+@@ -1632,9 +1632,13 @@ superscript :: PandocMonad m => MarkdownParser m (F Inlines)
+ superscript = fmap B.superscript <$> try (do
+   guardEnabled Ext_superscript
+   char '^'
+-  mconcat <$> many1Till (do notFollowedBy spaceChar
+-                            notFollowedBy newline
+-                            inline) (char '^'))
++  supLink <|> supNotLink)
++  where
++    supLink = lookAhead (char '[') >> link <* char '^'
++    supNotLink =
++      mconcat <$> many1Till (do notFollowedBy spaceChar
++                                notFollowedBy newline
++                                inline) (char '^')
+ 
+ subscript :: PandocMonad m => MarkdownParser m (F Inlines)
+ subscript = fmap B.subscript <$> try (do
 diff --git a/src/Text/Pandoc/Writers/HTML.hs b/src/Text/Pandoc/Writers/HTML.hs
 index 4bfd95674..96e5d1550 100644
 --- a/src/Text/Pandoc/Writers/HTML.hs
