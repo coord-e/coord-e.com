@@ -6,41 +6,55 @@ module Main where
 
 import Control.Monad ((<=<))
 import Hakyll
+import Hakyll.Contrib.LaTeX (initFormulaCompilerSVG)
+import Image.LaTeX.Render (EnvironmentOptions (..), defaultEnv)
+import Image.LaTeX.Render.Pandoc (PandocFormulaOptions (..), defaultPandocFormulaOptions)
 import System.FilePath.Posix (dropFileName, splitDirectories)
 import Text.Link.Pandoc (addAnchorLinkToHeadings, processEmbedLinks)
+import Text.Pandoc (Pandoc)
 import Text.Pandoc.Options (WriterOptions (..))
 
 main :: IO ()
-main = hakyll do
-  match "asset/**" do
-    route . gsubRoute "asset/" $ const ""
-    compile copyFileCompiler
+main = do
+  renderFormulae <- initFormulaCompilerSVG 1000 latexEnvOptions
+  hakyll do
+    match "asset/**" do
+      route . gsubRoute "asset/" $ const ""
+      compile copyFileCompiler
 
-  create ["post/index.html"] do
-    route idRoute
-    compile $
-      makeItem ""
-        >>= loadAndApplyTemplate "template/post-index.html" (indexTitleContext <> postsContext <> defaultContext)
-        >>= loadAndApplyTemplate "template/default.html" (indexTitleContext <> fragmentsContext <> defaultContext)
-        >>= relativizeUrls
+    create ["post/index.html"] do
+      route idRoute
+      compile $
+        makeItem ""
+          >>= loadAndApplyTemplate "template/post-index.html" (indexTitleContext <> postsContext <> defaultContext)
+          >>= loadAndApplyTemplate "template/default.html" (indexTitleContext <> fragmentsContext <> defaultContext)
+          >>= relativizeUrls
 
-  match "content/post/*.md" do
-    route $ gsubRoute "content/" (const "") `composeRoutes` setExtension "html"
-    compile $
-      markdownCompiler
-        >>= loadAndApplyTemplate "template/post.html" defaultContext
-        >>= loadAndApplyTemplate "template/default.html" (fragmentsContext <> defaultContext)
-        >>= relativizeUrls
+    match "content/post/*.md" do
+      route $ gsubRoute "content/" (const "") `composeRoutes` setExtension "html"
+      compile $
+        markdownCompiler renderFormulae
+          >>= loadAndApplyTemplate "template/post.html" defaultContext
+          >>= loadAndApplyTemplate "template/default.html" (fragmentsContext <> defaultContext)
+          >>= relativizeUrls
 
-  match "template/*" do
-    compile templateBodyCompiler
+    match "template/*" do
+      compile templateBodyCompiler
 
-markdownCompiler :: Compiler (Item String)
-markdownCompiler =
-  pandocCompilerWithTransform
+latexEnvOptions :: EnvironmentOptions
+latexEnvOptions =
+  defaultEnv
+    { latexFontSize = 14
+    }
+
+markdownCompiler ::
+  (PandocFormulaOptions -> Pandoc -> Compiler Pandoc) ->
+  Compiler (Item String)
+markdownCompiler renderFormulae =
+  pandocCompilerWithTransformM
     defaultHakyllReaderOptions
     writerOptions
-    (addAnchorLinkToHeadings . processEmbedLinks)
+    (renderFormulae defaultPandocFormulaOptions . addAnchorLinkToHeadings . processEmbedLinks)
   where
     writerOptions =
       defaultHakyllWriterOptions

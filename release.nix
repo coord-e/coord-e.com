@@ -6,6 +6,12 @@ let
       overrides = hself: hsuper: {
         generate-coord-e-com =
           hself.callCabal2nix "generate-coord-e-com" ./generator { };
+        latex-svg-hakyll = pkgs.haskell.lib.appendPatch
+          (hsuper.callPackage ./nix/latex-svg-hakyll.nix { })
+          ./nix/latex-svg-hakyll.patch;
+        latex-svg-pandoc = pkgs.haskell.lib.appendPatch
+          (hsuper.callPackage ./nix/latex-svg-pandoc.nix { })
+          ./nix/latex-svg-pandoc.patch;
         pandoc = pkgs.haskell.lib.appendPatch hsuper.pandoc ./nix/pandoc.patch;
       };
     };
@@ -17,6 +23,9 @@ in {
   shell = pkgs.haskellPackages.shellFor {
     packages = hp: with hp; [ generate-coord-e-com ];
     buildInputs = with pkgs; [
+      (texlive.combine {
+        inherit (texlive) scheme-basic preview extsizes dvisvgm;
+      })
       nixfmt
       cabal-install
       nodePackages.prettier

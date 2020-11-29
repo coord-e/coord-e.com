@@ -1,0 +1,10 @@
+diff --git a/latex-svg-hakyll.cabal b/latex-svg-hakyll.cabal
+index c3cf24b..f4aa18e 100644
+--- a/latex-svg-hakyll.cabal
++++ b/latex-svg-hakyll.cabal
+@@ -36,4 +36,4 @@ library
+     , latex-svg-image   ^>=0.2
+     , latex-svg-pandoc  ^>=0.2
+     , lrucache          ^>=1.2
+-    , pandoc-types      ^>=1.17.6.1 || ^>=1.20
++    , pandoc-types      ^>=1.17.6.1 || ^>=1.20 || ^>= 1.21
