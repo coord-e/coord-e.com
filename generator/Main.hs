@@ -113,10 +113,13 @@ postsContext = listField "posts" defaultContext (recentFirst =<< loadAll pat)
   where
     pat = "content/post/*.md" .||. "content/post/*/index.md"
 
-indexTitleContext :: Context String
-indexTitleContext = field "title" f
+indexTitleContext :: Bool -> Context String
+indexTitleContext isHtml = field "title" f
   where
-    f = fmap (("Index of " <>) . dropFileName) . getJustRoute . itemIdentifier
+    f = fmap (makeTitle . dropFileName) . getJustRoute . itemIdentifier
+    makeTitle path
+      | isHtml = "Index of <code>" <> path <> "</code>"
+      | otherwise = "Index of " <> path
 
 getJustRoute :: Identifier -> Compiler FilePath
 getJustRoute ident =
