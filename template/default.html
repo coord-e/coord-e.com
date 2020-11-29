@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link
+      href="https://fonts.googleapis.com/css?family=Noto+Sans+JP:400,bold,900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Overpass+Mono:normal,bold&display=swap"
+      rel="stylesheet"
+    />
+    <link href="/style/style.css" rel="stylesheet" />
+    <link
+      href="/style/pc.css"
+      media="screen and (min-width: 1000px)"
+      rel="stylesheet"
+    />
+    <link
+      href="/style/mobile.css"
+      media="screen and (max-width: 1000px)"
+      rel="stylesheet"
+    />
+
+    <title>$title$ - coord-e.com</title>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <span class="path"
+          >https://<a href="/">coord-e.com</a>
+          $-for(fragments)-$
+          <span class="path-fragment">/<a href="$path$">$fragment$</a></span>
+          $-endfor-$
+        </span>
+      </nav>
+    </header>
+    <main role="main">$body$</main>
+    <footer>
+      <small>© 2020 coord_e</small>
+    </footer>
+  </body>
+</html>

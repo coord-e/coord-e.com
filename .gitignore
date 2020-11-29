@@ -1,0 +1,16 @@
+# nix
+result
+
+# hakyll
+_site
+_cache
+
+# haskell
+dist
+dist-*
+*.o
+*.hi
+*.hie
+*.dyn_o
+*.dyn_hi
+.ghc.environment.*

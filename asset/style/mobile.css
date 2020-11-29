@@ -1,0 +1,62 @@
+html {
+  font-size: 3vw;
+}
+
+ul,
+dl {
+  padding-left: 1rem;
+}
+
+dd {
+  margin-left: 1.5rem;
+}
+
+.link-embed {
+  width: 90%;
+}
+
+main > article.page,
+body > header,
+body > footer {
+  width: 80vw;
+}
+
+.bio {
+  width: 80vw;
+  padding-top: 2rem;
+  padding-left: 4rem;
+  margin: 0;
+  background-color: #f1f1f1c0;
+}
+
+.ayano {
+  position: fixed;
+  bottom: -50%;
+  left: -20%;
+  height: 120vh;
+  z-index: -1;
+}
+
+.contact code {
+  display: block;
+  font-size: 0.9rem;
+}
+
+.contact-rhs::before {
+  content: "\A    ";
+  white-space: pre;
+}
+
+header nav {
+  margin-top: 1rem;
+}
+
+header nav .path {
+  font-size: 1.2rem;
+  line-height: 2.2rem;
+}
+
+header nav .path-fragment::before {
+  content: "\A  ";
+  white-space: pre;
+}

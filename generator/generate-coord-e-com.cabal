@@ -1,0 +1,33 @@
+cabal-version: 2.4
+name:          generate-coord-e-com
+version:       0.1.0.0
+license:       BSD-3-Clause
+license-file:  LICENSE
+maintainer:    coord_e <me@coord-e.com>
+author:        coord_e
+homepage:      https://github.com/coord-e/coord-e.com
+bug-reports:   https://github.com/coord-e/coord-e.com/issues
+synopsis:      Generator for coord-e.com
+description:   Generator for coord-e.com.
+build-type:    Simple
+
+source-repository head
+    type:     git
+    location: https://github.com/coord-e/coord-e.com
+
+executable generator
+    main-is:          Main.hs
+    other-modules:    Text.Link.Pandoc
+    default-language: Haskell2010
+    ghc-options:
+        -Wall -Werror -Wcompat -Wincomplete-record-updates
+        -Wincomplete-uni-patterns -Wnoncanonical-monad-instances
+
+    build-depends:
+        base >=4.8 && <5,
+        hakyll ^>=4.13,
+        pandoc-types ^>=1.21,
+        pandoc ^>=2.10,
+        text ^>=1.2,
+        neat-interpolation ^>=0.3,
+        filepath ^>=1.4

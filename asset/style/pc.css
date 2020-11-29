@@ -7,6 +7,16 @@ dl {
   padding-left: 2rem;
 }
 
+.link-embed {
+  width: 50%;
+}
+
+main > article.page,
+body > header,
+body > footer {
+  width: 60vw;
+}
+
 .bio {
   position: absolute;
   top: 5%;

@@ -1,0 +1,50 @@
+diff --git a/src/Text/Pandoc/Options.hs b/src/Text/Pandoc/Options.hs
+index fde8a9abe..d774f5452 100644
+--- a/src/Text/Pandoc/Options.hs
++++ b/src/Text/Pandoc/Options.hs
+@@ -263,6 +263,7 @@ data WriterOptions = WriterOptions
+   , writerReferenceLocation :: ReferenceLocation    -- ^ Location of footnotes and references for writing markdown
+   , writerSyntaxMap         :: SyntaxMap
+   , writerPreferAscii       :: Bool           -- ^ Prefer ASCII representations of characters when possible
++  , writerNoteTitles        :: Bool       -- ^ Put title attribute with its content for footnote links
+   } deriving (Show, Data, Typeable, Generic)
+ 
+ instance Default WriterOptions where
+@@ -298,6 +299,7 @@ instance Default WriterOptions where
+                       , writerReferenceLocation = EndOfDocument
+                       , writerSyntaxMap        = defaultSyntaxMap
+                       , writerPreferAscii      = False
++                      , writerNoteTitles       = False
+                       }
+ 
+ instance HasSyntaxExtensions WriterOptions where
+diff --git a/src/Text/Pandoc/Writers/HTML.hs b/src/Text/Pandoc/Writers/HTML.hs
+index 4bfd95674..96e5d1550 100644
+--- a/src/Text/Pandoc/Writers/HTML.hs
++++ b/src/Text/Pandoc/Writers/HTML.hs
+@@ -1225,6 +1225,9 @@ inlineToHtml opts inline = do
+                                          revealSlash <>
+                                          writerIdentifierPrefix opts <> "fn" <> ref)
+                                        ! A.class_ "footnote-ref"
++                                       ! (if writerNoteTitles opts
++                                             then A.title . toValue $ extractSimpleContent contents
++                                             else mempty)
+                                        ! prefixedId opts ("fnref" <> ref)
+                                        $ (if isJust epubVersion
+                                              then id
+@@ -1242,6 +1245,15 @@ inlineToHtml opts inline = do
+                                     then result ! customAttribute "data-cites" (toValue citationIds)
+                                     else result
+ 
++extractSimpleContent :: [Block] -> Text
++extractSimpleContent blocks = execState (walkM f blocks) mempty
++  where
++    f :: Inline -> State Text Inline
++    f i@(Str s) = modify (<> s) *> pure i
++    f i@(Code _ s) = modify (<> s) *> pure i
++    f i@(Math _ s) = modify (<> s) *> pure i
++    f i = pure i
++
+ addRoleToLink :: Inline -> Inline
+ addRoleToLink (Link (id',classes,kvs) ils (src,tit)) =
+   Link (id',classes,("role","doc-biblioref"):kvs) ils (src,tit)
