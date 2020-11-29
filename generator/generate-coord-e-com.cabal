@@ -33,4 +33,5 @@ executable generator
         filepath ^>=1.4,
         latex-svg-hakyll ^>=0.2,
         latex-svg-pandoc ^>=0.2,
-        latex-svg-image ^>=0.2
+        latex-svg-image ^>=0.2,
+        typed-process ^>=0.2

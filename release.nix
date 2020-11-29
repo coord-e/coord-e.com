@@ -26,6 +26,7 @@ in {
       (texlive.combine {
         inherit (texlive) scheme-basic preview extsizes dvisvgm;
       })
+      git
       nixfmt
       cabal-install
       nodePackages.prettier

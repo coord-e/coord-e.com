@@ -39,7 +39,13 @@
     </header>
     <main role="main">$body$</main>
     <footer>
-      <small>© 2020 coord_e</small>
+      <small>
+        $-if(path)-$
+        <a href="https://github.com/coord-e/coord-e.com/blob/$gitref$/$path$"
+          >source</a
+        >
+        - $-endif$ © 2020 coord_e</small
+      >
     </footer>
   </body>
 </html>

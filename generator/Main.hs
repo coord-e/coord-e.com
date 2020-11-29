@@ -19,13 +19,17 @@ import System.FilePath.Posix
     (<.>),
     (</>),
   )
+import System.Process.Typed (proc, readProcess_)
+import Text.Formula.Pandoc (renderFormulae)
 import Text.Link.Pandoc (addAnchorLinkToHeadings, processEmbedLinks)
 import Text.Pandoc (Pandoc)
 import Text.Pandoc.Options (WriterOptions (..))
+import Text.Pandoc.UTF8 (toStringLazy)
 
 main :: IO ()
 main = do
   renderFormulae <- initFormulaCompilerSVG 1000 latexEnvOptions
+  gitCommit <- getCurrentCommit
   hakyll do
     match "asset/**" do
       route . gsubRoute "asset/" $ const ""
@@ -44,15 +48,15 @@ main = do
         markdownCompiler renderFormulae
           >>= subDirUrls
           >>= loadAndApplyTemplate "template/post.html" defaultContext
-          >>= loadAndApplyTemplate "template/default.html" (fragmentsContext <> defaultContext)
+          >>= loadAndApplyTemplate "template/default.html" (gitRefContext gitCommit <> fragmentsContext <> defaultContext)
           >>= relativizeUrls
 
     create ["post/index.html"] do
       route idRoute
       compile $
         makeItem ""
-          >>= loadAndApplyTemplate "template/post-index.html" (indexTitleContext <> postsContext <> defaultContext)
-          >>= loadAndApplyTemplate "template/default.html" (indexTitleContext <> fragmentsContext <> defaultContext)
+          >>= loadAndApplyTemplate "template/post-index.html" (indexTitleContext True <> postsContext <> defaultContext)
+          >>= loadAndApplyTemplate "template/default.html" (indexTitleContext False <> fragmentsContext <> bodyField "body")
           >>= relativizeUrls
 
     match "template/*" do
@@ -120,6 +124,16 @@ indexTitleContext isHtml = field "title" f
     makeTitle path
       | isHtml = "Index of <code>" <> path <> "</code>"
       | otherwise = "Index of " <> path
+
+gitRefContext :: String -> Context String
+gitRefContext = constField "gitref"
+
+getCurrentCommit :: IO String
+getCurrentCommit = do
+  (out, _) <- readProcess_ p
+  pure $ toStringLazy out
+  where
+    p = proc "git" ["rev-parse", "HEAD"]
 
 getJustRoute :: Identifier -> Compiler FilePath
 getJustRoute ident =
