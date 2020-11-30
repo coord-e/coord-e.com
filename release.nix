@@ -24,7 +24,7 @@ in {
     packages = hp: with hp; [ generate-coord-e-com ];
     buildInputs = with pkgs; [
       (texlive.combine {
-        inherit (texlive) scheme-basic preview extsizes dvisvgm;
+        inherit (texlive) scheme-basic preview dvisvgm;
       })
       git
       nixfmt

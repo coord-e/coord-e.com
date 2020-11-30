@@ -17,7 +17,10 @@ source-repository head
 
 executable generator
     main-is:          Main.hs
-    other-modules:    Text.Link.Pandoc
+    other-modules:
+        Text.Link.Pandoc
+        Text.Formula.Pandoc
+
     default-language: Haskell2010
     ghc-options:
         -Wall -Werror -Wcompat -Wincomplete-record-updates
@@ -34,4 +37,5 @@ executable generator
         latex-svg-hakyll ^>=0.2,
         latex-svg-pandoc ^>=0.2,
         latex-svg-image ^>=0.2,
-        typed-process ^>=0.2
+        typed-process ^>=0.2,
+        tagsoup ^>=0.14

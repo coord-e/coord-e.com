@@ -7,9 +7,6 @@ module Main where
 
 import Control.Monad ((<=<))
 import Hakyll
-import Hakyll.Contrib.LaTeX (initFormulaCompilerSVG)
-import Image.LaTeX.Render (EnvironmentOptions (..), defaultEnv)
-import Image.LaTeX.Render.Pandoc (PandocFormulaOptions (..), defaultPandocFormulaOptions)
 import System.FilePath.Posix
   ( dropFileName,
     splitDirectories,
@@ -22,13 +19,11 @@ import System.FilePath.Posix
 import System.Process.Typed (proc, readProcess_)
 import Text.Formula.Pandoc (renderFormulae)
 import Text.Link.Pandoc (addAnchorLinkToHeadings, processEmbedLinks)
-import Text.Pandoc (Pandoc)
 import Text.Pandoc.Options (WriterOptions (..))
 import Text.Pandoc.UTF8 (toStringLazy)
 
 main :: IO ()
 main = do
-  renderFormulae <- initFormulaCompilerSVG 1000 latexEnvOptions
   gitCommit <- getCurrentCommit
   hakyll do
     match "asset/**" do
@@ -45,7 +40,7 @@ main = do
           `composeRoutes` gsubRoute "content/" (const "")
           `composeRoutes` setExtension "html"
       compile $
-        markdownCompiler renderFormulae
+        markdownCompiler
           >>= subDirUrls
           >>= loadAndApplyTemplate "template/post.html" defaultContext
           >>= loadAndApplyTemplate "template/default.html" (gitRefContext gitCommit <> fragmentsContext <> defaultContext)
@@ -72,12 +67,6 @@ unIndexRoute = customRoute f
       | takeBaseName p == "index" = takeDirectory p <.> takeExtension p
       | otherwise = p
 
-latexEnvOptions :: EnvironmentOptions
-latexEnvOptions =
-  defaultEnv
-    { latexFontSize = 14
-    }
-
 subDirUrls :: Item String -> Compiler (Item String)
 subDirUrls item = do
   path <- getJustRoute $ itemIdentifier item
@@ -86,14 +75,12 @@ subDirUrls item = do
     f p ('.' : '/' : url) = '.' : '/' : takeBaseName p </> url
     f _ url = url
 
-markdownCompiler ::
-  (PandocFormulaOptions -> Pandoc -> Compiler Pandoc) ->
-  Compiler (Item String)
-markdownCompiler renderFormulae =
+markdownCompiler :: Compiler (Item String)
+markdownCompiler =
   pandocCompilerWithTransformM
     defaultHakyllReaderOptions
     writerOptions
-    (renderFormulae defaultPandocFormulaOptions . addAnchorLinkToHeadings . processEmbedLinks)
+    (renderFormulae . addAnchorLinkToHeadings . processEmbedLinks)
   where
     writerOptions =
       defaultHakyllWriterOptions
