@@ -36,7 +36,7 @@ body {
 .post h3 > a:hover {
   text-decoration: none;
   color: #000000;
-  border-bottom: solid #000 3px;
+  border-bottom: solid #000 0.24rem;
 }
 
 .post h2:hover::before,
@@ -122,8 +122,26 @@ h3 > a {
   color: #ffffff;
 }
 
-ul {
+ul,
+dl {
   list-style: none;
+}
+
+ol li {
+  font-family: "Overpass Mono", monospace;
+  color: #b2bec3;
+}
+
+ol li > p {
+  font-family: "Noto Sans JP", sans-serif;
+  color: #222222;
+}
+
+ul li,
+dt,
+dd {
+  display: list-item;
+  padding-left: 0.4em;
 }
 
 li::before,
@@ -132,13 +150,13 @@ dd::before {
   font-family: "Overpass Mono", monospace;
   font-size: 1.15rem;
   color: #b2bec3;
-  padding-right: 0.4em;
+
+  display: inline-block;
+  width: 1em;
+  margin-left: -1em;
 }
 
-li:not([role="doc-endnote"])::before {
-  content: "-";
-}
-
+ul li::before,
 dt::before {
   content: "-";
 }
@@ -229,8 +247,9 @@ pre > code {
   overflow: scroll;
 }
 
-/* builtin, keyword */
+/* builtin, controlflow, keyword */
 code .bu,
+code .cf,
 code .kw {
   color: #a29bfe;
 }
@@ -249,6 +268,11 @@ code .vs {
 /* comment */
 code .co {
   color: #b2bec3;
+}
+
+/* datatype */
+code .dt {
+  color: #81ecec;
 }
 
 .bio .icon {
@@ -282,14 +306,26 @@ code .co {
 }
 
 figure {
-  margin: 2.5rem;
+  margin: 2.5rem 0;
+  text-align: center;
 }
 
-figure > img {
+img {
   max-width: 100%;
+  max-height: 150vh;
 }
 
 figure > figcaption {
   color: #636e72;
-  text-align: center;
+}
+
+blockquote {
+  border-left: solid #636e72 0.4em;
+  padding: 1em 1.2em;
+  margin: 1em;
+  color: #636e72;
+}
+
+blockquote > p {
+  margin: 0;
 }
