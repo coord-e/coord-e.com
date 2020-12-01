@@ -3,38 +3,49 @@ on: [push, pull_request]
 name: CI
 
 jobs:
-  prettier:
-    name: Check code style
+  lint:
+    name: Lint contents
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: cachix/install-nix-action@v12
+      - run: nix-env -f ./nix/pkgs.nix -iA nodejs
+      - run: cd content; npm run lint
+  build:
+    name: Build contents
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: cachix/install-nix-action@v12
+      - uses: cachix/cachix-action@v8
         with:
-          node-version: "14"
-      - run: npx prettier --check --print-width 85 .
-  validate_html:
-    name: Validate HTML
+          name: coord-e-com
+          authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+      - run: nix-build
+      - uses: actions/upload-artifact@v2
+        with:
+          name: site
+          path: result
+  ormolu:
+    name: Run Ormolu
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
-      - run: |
-          shopt -s globstar
-          for file in static/**/*.html; do
-            curl -fsS "https://validator.w3.org/nu/?out=gnu" \
-              -H "Content-Type: text/html; charset=utf-8"    \
-              --data-binary "@$file"                         \
-                | { ! grep -z error; }
-          done
-  validate_css:
-    name: Validate CSS
+      - uses: cachix/install-nix-action@v12
+      - run: nix-env -f ./nix/pkgs.nix -iA ormolu
+      - run: ormolu --mode check $(find . -name '*.hs')
+  hlint:
+    name: Run HLint
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
-      - run: |
-          shopt -s globstar
-          for file in static/**/*.css; do
-            curl -fsS "https://jigsaw.w3.org/css-validator/validator"       \
-              -H "Content-Type: multipart/form-data"                        \
-              -F warning=2 -F output=text -F profile=css3 -F "text=<$file"  \
-                | { ! grep -z errors; }
-          done
+      - uses: cachix/install-nix-action@v12
+      - run: nix-env -f ./nix/pkgs.nix -iA hlint
+      - run: hlint $(find . -name '*.hs')
+  nixfmt:
+    name: Run nixfmt
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+      - run: nix-env -f ./nix/pkgs.nix -iA nixfmt
+      - run: nixfmt --check $(find . -name '*.nix')
