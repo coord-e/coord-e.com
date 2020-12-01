@@ -14,6 +14,7 @@ import System.FilePath.Posix
     takeBaseName,
     takeDirectory,
     takeExtension,
+    takeFileName,
     (<.>),
     (</>),
   )
@@ -25,7 +26,7 @@ import Text.Pandoc.UTF8 (toStringLazy)
 
 main :: IO ()
 main = do
-  gitCommit <- getCurrentCommit
+  gitCommitContext <- getGitCommitContext
   hakyll do
     match "asset/**" do
       route . gsubRoute "asset/" $ const ""
@@ -42,15 +43,15 @@ main = do
         markdownCompiler
           >>= subDirUrls
           >>= loadAndApplyTemplate "template/post.html" defaultContext
-          >>= loadAndApplyTemplate "template/default.html" (gitRefContext gitCommit <> fragmentsContext <> defaultContext)
+          >>= loadAndApplyTemplate "template/default.html" (gitCommitContext <> fragmentsContext <> defaultContext)
           >>= relativizeUrls
 
     create ["post/index.html"] do
       route idRoute
       compile $
         makeItem ""
-          >>= loadAndApplyTemplate "template/post-index.html" (indexTitleContext True <> postsContext <> defaultContext)
-          >>= loadAndApplyTemplate "template/default.html" (indexTitleContext False <> fragmentsContext <> bodyField "body")
+          >>= loadAndApplyTemplate "template/post-index.html" (indexContext <> postsContext <> defaultContext)
+          >>= loadAndApplyTemplate "template/default.html" (indexContext <> fragmentsContext <> bodyField "body")
           >>= relativizeUrls
 
     match "template/*" do
@@ -103,16 +104,17 @@ postsContext = listField "posts" defaultContext (recentFirst =<< loadAll pat)
   where
     pat = "post/*.md" .||. "post/*/index.md"
 
-indexTitleContext :: Bool -> Context String
-indexTitleContext isHtml = field "title" f
+indexContext :: Context String
+indexContext = field "title" f <> field "index" getIndexPath
   where
-    f = fmap (makeTitle . dropFileName) . getJustRoute . itemIdentifier
-    makeTitle path
-      | isHtml = "Index of <code>" <> path <> "</code>"
-      | otherwise = "Index of " <> path
+    f = fmap ("Index of " <>) . getIndexPath
+    getIndexPath = fmap (('/' :) . removeIndex) . getJustRoute . itemIdentifier
+    removeIndex path
+      | takeFileName path == "index.html" = dropFileName path
+      | otherwise = path
 
-gitRefContext :: String -> Context String
-gitRefContext = constField "gitref"
+getGitCommitContext :: IO (Context String)
+getGitCommitContext = constField "commit" <$> getCurrentCommit
 
 getCurrentCommit :: IO String
 getCurrentCommit = maybe fromGitCommand pure =<< lookupEnv "GENERATOR_COMMIT_ID"
