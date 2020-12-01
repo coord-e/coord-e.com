@@ -42,6 +42,7 @@ main = do
       compile $
         markdownCompiler
           >>= subDirUrls
+          >>= saveSnapshot "content"
           >>= loadAndApplyTemplate "template/post.html" defaultContext
           >>= loadAndApplyTemplate "template/default.html" (gitCommitContext <> fragmentsContext <> defaultContext)
           >>= relativizeUrls
@@ -54,8 +55,25 @@ main = do
           >>= loadAndApplyTemplate "template/default.html" (indexContext <> fragmentsContext <> bodyField "body")
           >>= relativizeUrls
 
+    create ["post/rss.xml"] do
+      route idRoute
+      compile $
+        loadAllSnapshots allPosts "content"
+          >>= fmap (take 10) . recentFirst
+          >>= renderRss feedConfig (bodyField "description" <> defaultContext)
+
     match "template/*" do
       compile templateBodyCompiler
+
+feedConfig :: FeedConfiguration
+feedConfig =
+  FeedConfiguration
+    { feedTitle = "coord-e.com/post",
+      feedDescription = "Posts in coord-e.com",
+      feedAuthorName = "coord_e",
+      feedAuthorEmail = "me@coord-e.com",
+      feedRoot = "https://coord-e.com"
+    }
 
 imageFile :: Pattern
 imageFile = fromRegex "\\.(png|jpg|svg)$"
@@ -100,9 +118,10 @@ fragmentsContext = listFieldWith "fragments" fields items
       let path' = path ++ '/' : fragment in (fragment, path') : k path'
 
 postsContext :: Context String
-postsContext = listField "posts" defaultContext (recentFirst =<< loadAll pat)
-  where
-    pat = "post/*.md" .||. "post/*/index.md"
+postsContext = listField "posts" defaultContext (recentFirst =<< loadAll allPosts)
+
+allPosts :: Pattern
+allPosts = "post/*.md" .||. "post/*/index.md"
 
 indexContext :: Context String
 indexContext = field "title" f <> field "index" getIndexPath
