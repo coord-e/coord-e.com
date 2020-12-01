@@ -30,15 +30,13 @@ main = do
       route . gsubRoute "asset/" $ const ""
       compile copyFileCompiler
 
-    match ("content/post/*/*" .&&. imageFile) do
-      route $ gsubRoute "content/" (const "")
+    match ("post/*/*" .&&. imageFile) do
+      route idRoute
       compile copyFileCompiler
 
-    match ("content/post/*.md" .||. "content/post/*/index.md") do
+    match ("post/*.md" .||. "post/*/index.md") do
       route $
-        unIndexRoute
-          `composeRoutes` gsubRoute "content/" (const "")
-          `composeRoutes` setExtension "html"
+        unIndexRoute `composeRoutes` setExtension "html"
       compile $
         markdownCompiler
           >>= subDirUrls
@@ -102,7 +100,7 @@ fragmentsContext = listFieldWith "fragments" fields items
 postsContext :: Context String
 postsContext = listField "posts" defaultContext (recentFirst =<< loadAll pat)
   where
-    pat = "content/post/*.md" .||. "content/post/*/index.md"
+    pat = "post/*.md" .||. "post/*/index.md"
 
 indexTitleContext :: Bool -> Context String
 indexTitleContext isHtml = field "title" f
