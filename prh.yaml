@@ -1,0 +1,17 @@
+version: 1
+rules:
+  - expected: LaTeX
+  - expected: TeX
+    options:
+      wordBoundary: true
+    specs:
+      - from: texはアレ
+        to: TeXはアレ
+      - from: textlint
+        to: textlint
+  - expected: Docker
+  - expected: Haskell
+  - expected: HLint
+  - expected: GitHub
+  - pattern: ...
+    expected: …
