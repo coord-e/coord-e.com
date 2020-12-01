@@ -15,7 +15,7 @@ source-repository head
     type:     git
     location: https://github.com/coord-e/coord-e.com
 
-executable generator
+executable generate-coord-e-com
     main-is:          Main.hs
     other-modules:
         Text.Link.Pandoc

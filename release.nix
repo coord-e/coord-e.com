@@ -30,7 +30,7 @@ let
     buildPhase = ''
       export LANG=C.UTF-8
       export GENERATOR_COMMIT_ID=${pkgs.lib.commitIdFromGitRepo ./.git}
-      ${generate-coord-e-com}/bin/generator build
+      ${generate-coord-e-com}/bin/generate-coord-e-com build
     '';
     installPhase = "cp -a _site $out";
   };
@@ -39,12 +39,19 @@ in {
   inherit coord-e-com generate-coord-e-com;
   shell = pkgs.mkShell {
     buildInputs = with pkgs; [
+      # for generator
       git
       texlive-combined
       generate-coord-e-com
+      # for textlint/prettier
+      nodejs
+      # formatting
       nixfmt
       hlint
       ormolu
     ];
+    shellHook = ''
+      export LANG=C.UTF-8
+    '';
   };
 }
