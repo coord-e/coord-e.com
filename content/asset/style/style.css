@@ -127,12 +127,16 @@ dl {
   list-style: none;
 }
 
-ol li {
+ol li::marker {
+  font-family: "Overpass Mono", monospace;
+}
+
+.footnotes ol li {
   font-family: "Overpass Mono", monospace;
   color: #b2bec3;
 }
 
-ol li > p {
+.footnotes ol li > p {
   font-family: "Noto Sans JP", sans-serif;
   color: #222222;
 }
