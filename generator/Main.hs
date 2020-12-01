@@ -7,6 +7,7 @@ module Main where
 
 import Control.Monad ((<=<))
 import Hakyll
+import System.Environment (lookupEnv)
 import System.FilePath.Posix
   ( dropFileName,
     splitDirectories,
@@ -114,11 +115,11 @@ gitRefContext :: String -> Context String
 gitRefContext = constField "gitref"
 
 getCurrentCommit :: IO String
-getCurrentCommit = do
-  (out, _) <- readProcess_ p
-  pure $ toStringLazy out
+getCurrentCommit = maybe fromGitCommand pure =<< lookupEnv "GENERATOR_COMMIT_ID"
   where
-    p = proc "git" ["rev-parse", "HEAD"]
+    fromGitCommand = do
+      (out, _) <- readProcess_ $ proc "git" ["rev-parse", "HEAD"]
+      pure $ toStringLazy out
 
 getJustRoute :: Identifier -> Compiler FilePath
 getJustRoute ident =
