@@ -214,7 +214,7 @@ ccc の実装では、まず IR 上で**backward data-flow analysis**[[1]](#av20
 
 ![表2: ベンチマーク結果: コンパイル時間](./bench-compile.png)
 
-![図6: コンパイラごとのコンパイル時間の比較](./bench-compile-chart.png)
+![図6: コンパイラごとのコンパイル時間の比較](./bench-compile-chart.svg)
 
 ### 実行時間
 
@@ -222,7 +222,7 @@ ccc の実装では、まず IR 上で**backward data-flow analysis**[[1]](#av20
 
 ![表3: ベンチマーク結果: 実行時間](./bench-execution.png)
 
-![図7: コンパイラごとの実行時間の比較](./bench-execution-chart.png)
+![図7: コンパイラごとの実行時間の比較](./bench-execution-chart.svg)
 
 ### 出力コード行数
 
