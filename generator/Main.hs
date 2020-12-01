@@ -36,6 +36,12 @@ main = do
       route idRoute
       compile copyFileCompiler
 
+    match "post/*/*.gv" do
+      route $ setExtension "svg"
+      compile $
+        getResourceLBS
+          >>= withItemBody (unixFilterLBS "dot" ["-Tsvg"])
+
     match ("post/*.md" .||. "post/*/index.md") do
       route $
         unIndexRoute `composeRoutes` setExtension "html"

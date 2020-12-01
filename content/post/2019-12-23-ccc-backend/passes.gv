@@ -1,0 +1,71 @@
+digraph arch {
+  bgcolor = transparent;
+
+  graph [
+    newrank = true;
+    splines = ortho;
+    nodesep = 0.3;
+    ranksep = 0.3;
+  ];
+  node [
+    style = filled;
+    fillcolor = white;
+    height = 0.3;
+    width = 1.5;
+    fixedsize = true;
+    fontsize = 10;
+  ];
+
+  start [shape=ellipse, group=f, label="Input File"];
+
+  start -> source;
+  subgraph cluster_0 {
+    style = "dashed, filled";
+    fillcolor = lightgrey;
+    color = black;
+    label = "front end";
+    labeljust = l;
+
+    source  [shape=parallelogram, group=f, label="C Source"];
+    tokenize  [shape=box, group=f, label="Tokenize"];
+    tokens  [shape=parallelogram, group=f, label="Tokens"];
+    parse  [shape=box, group=f, label="Parse"];
+    ast1  [shape=parallelogram, group=f, label="AST"];
+    sema  [shape=box, group=f, label="Semantic Analysis"];
+    ast2  [shape=parallelogram, group=f, label="AST"];
+
+    source -> tokenize -> tokens -> parse -> ast1 -> sema -> ast2  [weight=10];
+  }
+  ast2 -> irgen [weight=0];
+
+  subgraph cluster_1 {
+    style = "dashed, filled";
+    fillcolor = lightgrey;
+    color = black;
+    label = "back end";
+    labeljust = l;
+
+    irgen [shape=box, group=b1, label="IR Generation"];
+    ir1 [shape=parallelogram, group=b1, label="IR"];
+    mem2reg [shape=box, group=b1, label="Mem2Reg"];
+    ir2 [shape=parallelogram, group=b1, label="IR"];
+    arch [shape=box, group=b1, label="Target Conversion"];
+    ir3 [shape=parallelogram, group=b1, label="IR"];
+    liveness [shape=box, group=b2, label="Liveness Analysis"];
+    ir4 [shape=parallelogram, group=b2, label="IR"];
+    regalloc [shape=box, group=b2, label="Register Allocation"];
+    ir5 [shape=parallelogram, group=b2, label="IR"];
+    codegen [shape=box, group=b2, label="Code Generation"];
+    asm [shape=parallelogram, group=b2, label="x64 Assembly"];
+
+    irgen -> ir1 -> mem2reg -> ir2 -> arch -> ir3  [weight=10];
+    ir3 -> liveness [weight=0];
+    liveness -> ir4 -> regalloc -> ir5 -> codegen -> asm [weight=10];
+
+  }
+  asm -> end;
+
+  end [shape=oval, group=b2, label="Output"];
+
+  { rank=same; tokenize -> irgen -> liveness [style=invis]; }
+}

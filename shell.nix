@@ -5,6 +5,7 @@ mkShell {
   buildInputs = [
     # for generator
     git
+    graphviz
     (callPackage ./nix/texlive-combined.nix { })
     (callPackage ./generator { })
     # for textlint/prettier

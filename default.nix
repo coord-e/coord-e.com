@@ -6,7 +6,7 @@ in stdenv.mkDerivation {
   name = "coord-e-com";
   src = ./content;
   nativeBuildInputs =
-    [ (callPackage ./nix/texlive-combined.nix { }) generator ];
+    [ graphviz (callPackage ./nix/texlive-combined.nix { }) generator ];
   buildPhase = ''
     export LANG=C.UTF-8
     export GENERATOR_COMMIT_ID=${lib.commitIdFromGitRepo ./.git}
