@@ -10,6 +10,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: cachix/install-nix-action@v12
       - run: nix-env -f ./nix/pkgs.nix -iA nodejs
+      - run: cd content; npm install
       - run: cd content; npm run lint
   build:
     name: Build contents
@@ -47,5 +48,6 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
+      - uses: cachix/install-nix-action@v12
       - run: nix-env -f ./nix/pkgs.nix -iA nixfmt
       - run: nixfmt --check $(find . -name '*.nix')
