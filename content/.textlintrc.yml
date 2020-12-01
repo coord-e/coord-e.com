@@ -43,7 +43,9 @@ rules:
   "@textlint-ja/no-dropping-i": true
   "@textlint-rule/no-invalid-control-character": true
   no-mixed-zenkaku-and-hankaku-alphabet: true
-  no-dead-link: false
+  no-dead-link:
+    checkRelative: false
+    retry: 1
   prefer-tari-tari: true
   terminology: true
   ja-no-inappropriate-words: true
