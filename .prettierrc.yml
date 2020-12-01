@@ -1,0 +1,5 @@
+htmlWhitespaceSensitivity: strict
+overrides:
+  - files: "*.html"
+    options:
+      printWidth: 85
