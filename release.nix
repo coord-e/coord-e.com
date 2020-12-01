@@ -29,7 +29,6 @@ in {
       git
       nixfmt
       cabal-install
-      nodePackages.prettier
       haskellPackages.hlint
       haskellPackages.ormolu
     ];
