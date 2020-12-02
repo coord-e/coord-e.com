@@ -2,7 +2,7 @@
 title: 型クラスのご紹介
 ---
 
-この記事は[型 Advent Calendar 2019](https://qiita.com/advent-calendar/2019/type)の 23 日目だったのですが、記事をはてなブログから^[元記事: <https://coordination.hatenablog.com/entry/2019/12/24/012049>]移転した^[[新設、移転 - coord-e.com](/post/2020-11-29-transfer.html)]際に内容を変更したので^[表現を変えたりとか、言い回しを直したりとか、あと記事の趣旨を「型クラスの紹介」に寄せて後半の流れを変えた]もともとのそれとは少し違うものとなっています。
+この記事は[型 Advent Calendar 2019](https://qiita.com/advent-calendar/2019/type)の 23 日目だったのですが、記事をはてなブログから^[元記事: <https://coordination.hatenablog.com/entry/2019/12/24/012049>]移転した^[[新設、移転 - coord-e.com](/post/2020-12-02-transfer.html)]際に内容を変更したので^[表現を変えたりとか、言い回しを直したりとか、あと記事の趣旨を「型クラスの紹介」に寄せて後半の流れを変えた]もともとのそれとは少し違うものとなっています。
 
 ## はじめに
 
