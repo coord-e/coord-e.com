@@ -1,5 +1,6 @@
 ---
 title: 自作OCamlコンパイラでセルフホストした
+canonical: https://coordination.hatenablog.com/entry/2019/05/23/212720
 ---
 
 ![](./self-host.png)

@@ -1,5 +1,6 @@
 ---
 title: Dockerイメージ縮小オタク
+canonical: https://coordination.hatenablog.com/entry/2020/03/28/234717
 ---
 
 おはようございます！！！[coord_e](https://twitter.com/coord_e)です、よろしくどうぞ。

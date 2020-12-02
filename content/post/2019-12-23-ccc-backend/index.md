@@ -1,5 +1,6 @@
 ---
 title: cccコンパイラのバックエンド
+canonical: https://coordination.hatenablog.com/entry/backend-of-ccc-compiler
 ---
 
 <!-- textlint-disable ja-technical-writing/no-mix-dearu-desumasu -->

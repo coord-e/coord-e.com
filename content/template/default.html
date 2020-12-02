@@ -23,6 +23,9 @@
       media="screen and (max-width: 1000px)"
       rel="stylesheet"
     />
+    $if(canonical)$
+    <link rel="canonical" href="$canonical$" />
+    $endif$
 
     <title>$title$ - coord-e.com</title>
   </head>
@@ -40,7 +43,8 @@
     <main role="main">$body$</main>
     <footer>
       <small>
-        $-if(path)-$
+        $-if(canonical)-$
+        <a href="$canonical$">canonical version</a> - $endif$$if(path)-$
         <a href="https://github.com/coord-e/coord-e.com/blob/$commit$/content/$path$"
           >source</a
         >

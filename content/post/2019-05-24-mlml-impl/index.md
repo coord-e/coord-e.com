@@ -1,5 +1,6 @@
 ---
 title: mlmlの実装について
+canonical: https://coordination.hatenablog.com/entry/2019/05/24/174621
 ---
 
 前記事: [自作 OCaml コンパイラでセルフホストした - coord-e.com](/post/2019-05-23-mlml-self-host.html)
