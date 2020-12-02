@@ -1,0 +1,29 @@
+on:
+  push:
+    branches:
+      - main
+
+name: deploy
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: cachix/install-nix-action@v12
+      - uses: cachix/cachix-action@v8
+        with:
+          name: coord-e-com
+          authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+      - run: nix-build
+      # We need to move files in order to allow access via docker's volume mount
+      - run: |
+          mkdir dist
+          cp -r result/* dist/
+      - uses: netlify/actions/cli@6c34c3f
+        with:
+          args: deploy --dir=dist --prod
+        env:
+          NETLIFY_SITE_ID: '${{ secrets.NETLIFY_SITE_ID }}'
+          NETLIFY_AUTH_TOKEN: '${{ secrets.NETLIFY_AUTH_TOKEN }}'

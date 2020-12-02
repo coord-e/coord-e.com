@@ -1,0 +1,45 @@
+on: pull_request
+
+name: deploy preview
+
+jobs:
+  deploy_preview:
+    name: Deploy preview
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: cachix/install-nix-action@v12
+      - uses: cachix/cachix-action@v8
+        with:
+          name: coord-e-com
+          authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+      - run: nix-build
+      # We need to move files in order to allow access via docker's volume mount
+      - run: |
+          mkdir dist
+          cp -r result/* dist/
+      - id: deploy_to_netlify
+        uses: netlify/actions/cli@6c34c3f
+        with:
+          args: deploy --dir=dist
+        env:
+          NETLIFY_SITE_ID: '${{ secrets.NETLIFY_SITE_ID }}'
+          NETLIFY_AUTH_TOKEN: '${{ secrets.NETLIFY_AUTH_TOKEN }}'
+      - uses: actions/github-script@v3
+        with:
+          github-token: '${{ secrets.GITHUB_TOKEN }}'
+          script: |
+            github.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: [
+                  'Deploy preview ready: ${{ steps.deploy_to_netlify.outputs.NETLIFY_URL }}',
+                  '<details>',
+                  '',
+                  '```',
+                  JSON.parse('${{ toJson(steps.deploy_to_netlify.outputs.NETLIFY_OUTPUT) }}'),
+                  '```',
+                  '</details>'
+                ].join('\n')
+            })
