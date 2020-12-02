@@ -211,7 +211,7 @@ Haskell のほうのやつは型コンストラクタに対する型クラスも
 この辞書というのはインスタンス宣言ごとに存在する値で、 `Eq` だったら `(=)` が、 `Num` だったら `(+)` の実装が入っています。
 型制約を最初に発生させた場所というのはすなわちその実装を必要としている場所なので、そこでは辞書からそれらの実装を取り出してそれを呼び出すようにします。
 
-[[4]](#ref4)が型クラスを含む型推論の具体的な実装をわかりやすくコードを交えて説明しています。
+[[3]](#ref3)が型クラスを含む型推論の具体的な実装をわかりやすくコードを交えて説明しています。
 また、自分が過去に書いたスライドが型クラスの実装が具体的にどういう感じになるのか説明しているので、こちらもどうぞ。
 
 [embed](https://coord-e.github.io/slide-type-class-lt/ "Haskellの型クラス"){ description="型クラスっていうのがあるらしいです" }
@@ -224,4 +224,4 @@ Haskell のほうのやつは型コンストラクタに対する型クラスも
 
 - <a name="ref1">[[1]](#ref1) Wadler, Philip, and Stephen Blott. "How to make ad-hoc polymorphism less ad hoc." Proceedings of the 16th ACM SIGPLAN-SIGACT symposium on Principles of programming languages. ACM, 1989.
 - <a name="ref2">[[2]](#ref2) Jones, Mark P. "A system of constructor classes: overloading and implicit higher-order polymorphism." Journal of functional programming 5.1 (1995): 1-35.
-- <a name="ref3">[[4]](#ref3) Jones, Mark P. "Typing Haskell in Haskell." Haskell workshop. Vol. 7. 1999.
+- <a name="ref3">[[3]](#ref3) Jones, Mark P. "Typing Haskell in Haskell." Haskell workshop. Vol. 7. 1999.
