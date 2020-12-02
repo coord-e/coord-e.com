@@ -1,5 +1,5 @@
 ---
-title: 自作OCamlコンパイラでセルフホストした
+title: 自作 OCaml コンパイラでセルフホストした
 canonical: https://coordination.hatenablog.com/entry/2019/05/23/212720
 ---
 

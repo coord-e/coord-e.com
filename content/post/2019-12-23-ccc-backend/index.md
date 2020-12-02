@@ -1,5 +1,5 @@
 ---
-title: cccコンパイラのバックエンド
+title: ccc コンパイラのバックエンド
 canonical: https://coordination.hatenablog.com/entry/backend-of-ccc-compiler
 ---
 

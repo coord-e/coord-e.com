@@ -1,5 +1,5 @@
 ---
-title: mlmlの実装について
+title: mlml の実装について
 canonical: https://coordination.hatenablog.com/entry/2019/05/24/174621
 ---
 

@@ -1,5 +1,5 @@
 ---
-title: Dockerイメージ縮小オタク
+title: Docker イメージ縮小オタク
 canonical: https://coordination.hatenablog.com/entry/2020/03/28/234717
 ---
 

@@ -1,5 +1,5 @@
 ---
-title: セキュリティ・キャンプ全国大会2019に参加しました
+title: セキュリティ・キャンプ全国大会 2019 に参加しました
 canonical: https://coordination.hatenablog.com/entry/2019/08/19/020448
 ---
 
