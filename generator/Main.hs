@@ -106,7 +106,7 @@ markdownCompiler =
   pandocCompilerWithTransformM
     readerOptions
     writerOptions
-    (renderFormulae . addAnchorLinkToHeadings . processEmbedLinks)
+    (renderFormulae . addAnchorLinkToHeadings . addToC . processEmbedLinks)
   where
     readerOptions =
       defaultHakyllReaderOptions
