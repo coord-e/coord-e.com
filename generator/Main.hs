@@ -21,8 +21,10 @@ import System.FilePath.Posix
 import System.Process.Typed (proc, readProcess_)
 import Text.Formula.Pandoc (renderFormulae)
 import Text.Link.Pandoc (addAnchorLinkToHeadings, processEmbedLinks)
-import Text.Pandoc.Options (WriterOptions (..))
+import Text.Pandoc.Extensions (Extension (..), enableExtension, pandocExtensions)
+import Text.Pandoc.Options (ReaderOptions (..), WriterOptions (..))
 import Text.Pandoc.UTF8 (toStringLazy)
+import Text.TableOfContents.Pandoc (addToC)
 
 main :: IO ()
 main = do
@@ -102,10 +104,14 @@ subDirUrls item = do
 markdownCompiler :: Compiler (Item String)
 markdownCompiler =
   pandocCompilerWithTransformM
-    defaultHakyllReaderOptions
+    readerOptions
     writerOptions
-    (renderFormulae . addAnchorLinkToHeadings . processEmbedLinks)
+    (renderFormulae . addAnchorLinkToHeadings . addToC . processEmbedLinks)
   where
+    readerOptions =
+      defaultHakyllReaderOptions
+        { readerExtensions = enableExtension Ext_emoji pandocExtensions
+        }
     writerOptions =
       defaultHakyllWriterOptions
         { writerNoteTitles = True,
