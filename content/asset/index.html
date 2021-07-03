@@ -19,15 +19,23 @@
     <link href="/style/style.css" rel="stylesheet" />
     <link
       href="/style/pc.css"
-      media="screen and (min-width: 1000px)"
+      media="screen and (min-width: 900px) and (min-aspect-ratio: 7/6)"
       rel="stylesheet"
     />
     <link
       href="/style/mobile.css"
-      media="screen and (max-width: 1000px)"
+      media="screen and (max-width: 899px), screen and (max-aspect-ratio: 7/6)"
       rel="stylesheet"
     />
 
+    <script>
+      function setHref() {
+        document
+          .getElementsByClassName("contact-rhs")[0]
+          .setAttribute("href", "mailto:me@" + window.location.hostname);
+      }
+      document.addEventListener("DOMContentLoaded", setHref);
+    </script>
     <title>coord_e</title>
   </head>
   <body>
@@ -60,27 +68,29 @@
               class="badge"
             />
           </a>
-          <a href="https://last.fm/user/coord-e">
+          <a href="https://missing.coord-e.dev/@coord_e">
+            <!-- Logo data extracted from https://github.com/joinmisskey/mk-assets/blob/master/icons/icon.svg -->
+            <!-- which is licensed as "You can use these images freely if it is related to Misskey.".         -->
+            <!-- Copyright of the logo belongs to Misskey.                                                    -->
             <img
-              src="https://img.shields.io/badge/-coord--e-d51007?style=flat-square&amp;logo=last.fm&amp;logoColor=ffffff&amp;labelColor=090b0b"
-              alt="GitHub: coord-e"
+              src="https://img.shields.io/badge/-@coord__e@missing.coord--e.dev-86b300?style=flat-square&amp;labelColor=090b0b&amp;logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGoAAACCBAMAAABcGEBLAAAAJFBMVEVHcEy2/1W3/1W3/1XQ/5S3/1X+///////////////////////PfVzJAAAAC3RSTlMAykuFH6hOsdlvlX8VgJwAAAOqSURBVFjD7Zk7TxtBEIAX+7Axadgz7g0kPQbRnyMiRaLBQHqqPHCTIkqk0KSIoiRuXEWR3FCRSDQU1oG5P5d77O7N7M6aGxQqGAljbmf2Zr7dnZk7hHiUhywbr7b4RjUpZZdttZZahVyjQGYSMa3qUq5Lucl2MMx/eDKQ+2JRdtgEoyw2HsUF2U4/e3KFZdWTq+lnP7flcO9qPzncCw489po5j33GPRMWexMPi33JrmDJ4V6uG4e74LGvAwaDyuwXAO+1ypuqDxD0K+NYU6tVrFhY2WoTxBje871WSDL3wbAONkTPs17ByScln3+ZDQH2hvr67o9WO892yyQp5Qc+KOCo/AZaMyFaCZQPamlDE1axyC+R1ljsob+TSCVec77ysBojpDQVQ2z1FSobc3yrJBYX+MIVcky7eoqVbhCMTI4hBIWlYenM7LiSLwC45r5k6UydKzNwE33LiTOzffeCYhGQCi9I3CisSJMzA0+jXE5cYnZgscnVqWn+feiERc9UOOfhnnsTjDzsdxX3ljV+HdGEVLvh4V5Qtq/eqIMl1TG7oGb1sE9RFAQp7lS07/OrO/Iw/90kafnYi13h5U6t4jXKEDbisW/gGBg1vFNOqE3lcSQ2I0sk29vGAoYVKILDyh7GYKhVmcYY4n3rbjQS1Tect98Atmg+0QLr8tFJ96+1RJVH0rF1Lc6Yf+SZNNLBTVBtUA4dYKMXEkjoNPZGjuwHBSDdakPZfIfbhezgVrKORqAfaeJrd8kWADcBtR5sqxbR9H6r7Mb7QK+N+rxNT2nPxkK6Mas5NLpkO1dHTaDd6w6gw0EZC272dZ3U2aaP1q9sU3vkbH+Tn4QnpqW1PS+UmjoxBpKMGgcCCwku7ThM8mrDLe14VtKDJae0lxH4uU+c0o5pYbJWAY+ER4PkvuyUdnAU2x6vTZmZetjThEZkW1VSRm1+4DROJPtV1LxnB80q4Jr9vkAtPjxN6a3aVr6dqZ3aidCJSx8ddbrbGKg5A7uGpD50trRa9rDZRymoE9kF/Ew5AWXVylxHTmGK3XyZxQ6z5IFbp6+c3JwvTrCxreUpVbJUMXtutLboZ8Ym0bPcLntkV3KbDL2VeJ5MEn+9/d9Wd/PwblZPkNVlRatlb6Mz9+2Br3GaL6dO78zdHNPKVi1fuzVfRp4euOqKxQyrJvucYPast5UXbO6Q/SXLqsXnXrK/5hkp9jHTqsnmXrLnviXOk8eMa5RTHLOtxMn388d/Nzxo+QcmVQq8RhhXOQAAAABJRU5ErkJggg=="
+              alt="Misskey: @coord_e@missing.coord-e.dev"
               class="badge"
             />
           </a>
-          <p>プログラミング言語の実装と理論に興味がある</p>
         </section>
         <section>
           <h2 id="preference"><a href="#preference">Preference</a></h2>
           <a href="https://wakatime.com/@coorde">
             <img
-              src="https://wakatime.com/share/@coorde/4c735e74-6755-4466-abfb-0fed81f86d64.svg"
+              src="https://wakatime.com/share/@coorde/34c65465-28ac-493c-9e16-efb91fceb101.svg"
               alt="chart"
               class="preference-chart"
             />
           </a>
           <a href="https://wakatime.com/@coorde">
             <img
-              src="https://wakatime.com/share/@coorde/34c65465-28ac-493c-9e16-efb91fceb101.svg"
+              src="https://wakatime.com/share/@coorde/4c735e74-6755-4466-abfb-0fed81f86d64.svg"
               alt="chart"
               class="preference-chart"
             />
@@ -117,10 +127,10 @@
         </section>
         <section class="contact">
           <h2 id="contact"><a href="#contact">Contact</a></h2>
-          <div class="sourceCode" id="cb1">
+          <div class="sourceCode">
             <pre
               class="sourceCode javascript"
-            ><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="bu">window</span><span class="op">.</span><span class="at">location</span> <span class="op">=</span><span class="contact-rhs"><span class="vs">`mailto:me@</span><span class="sc">${</span><span class="bu">window</span><span class="op">.</span><span class="at">location</span><span class="op">.</span><span class="at">hostname</span><span class="sc">}</span><span class="vs">`</span><span class="op">;</span></span></span></code></pre>
+            ><code class="sourceCode javascript"><span class="bu">window</span><span class="op">.</span><span class="at">location</span> <span class="op">=</span> <a class="contact-rhs"><span class="vs">`mailto:me@</span><span class="sc">${</span><span class="bu">window</span><span class="op">.</span><span class="at">location</span><span class="op">.</span><span class="at">hostname</span><span class="sc">}</span><span class="vs">`</span><span class="op">;</span></a></code></pre>
           </div>
         </section>
       </article>

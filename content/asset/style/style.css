@@ -68,6 +68,14 @@ a:hover {
   color: #55efc4;
 }
 
+.contact-rhs {
+  color: #ffffff;
+}
+
+.contact-rhs:hover {
+  color: #ffffff;
+}
+
 h1 > a,
 h2 > a,
 h3 > a {
