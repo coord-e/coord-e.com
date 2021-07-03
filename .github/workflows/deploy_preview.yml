@@ -19,7 +19,7 @@ jobs:
           mkdir dist
           cp -r result/* dist/
       - id: deploy_to_netlify
-        uses: netlify/actions/cli@6c34c3f
+        uses: netlify/actions/cli@6c34c3fcafc69ac2e1d6dbf226560329c6dfc51b
         with:
           args: deploy --dir=dist
         env:
