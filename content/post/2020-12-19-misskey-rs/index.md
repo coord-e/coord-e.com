@@ -194,7 +194,7 @@ async fn main() -> anyhow::Result<()> {
 とはいえここで困ることはほとんどないので引っかからなくていいです。
 
 `-> anyhow::Result` というのは `anyhow::Result<()>` という型の値をこの関数から返す、ということを言っています。
-`Result` っていうからには結果なんだろう…そうですこれは結果で、 [`anyhow`](https://crates.io/crates/anyhow) というライブラリが提供する結果を表す型を用いています。
+`Result` っていうからには結果なんだろう…そうですこれは結果で、 [`anyhow`](https://docs.rs/anyhow) というライブラリが提供する結果を表す型を用いています。
 ただしここでいう結果というのは成功して値が返ってきたか失敗してエラーが返ってきたかのどちらかを保持している値です。
 様々なエラーがプログラムからは出てくるのですが、 `anyhow` の `Result` を使うとその様々なエラーを全部吸い込んでくれます。
 これは例を示すうえで関係のない複雑さを隠すために使っているので、引っかからないでください^[引っかからないでも書き進められるようにこれを使っているのもあります]。
@@ -257,7 +257,7 @@ Ok(())
 futures = "0.3"
 ```
 
-[futures](https://crates.io/crates/futures) は Rust の非同期エコシステムの中心にいるクレートで、今回はストリームを扱うために必要となります。
+[futures](https://docs.rs/futures) は Rust の非同期エコシステムの中心にいるクレートで、今回はストリームを扱うために必要となります。
 
 ```rust
 use futures::stream::TryStreamExt;
@@ -649,7 +649,7 @@ async fn main() -> anyhow::Result<()> {
 
 このように書いても `events` は終わらない^[もちろんエラーの場合を除く]（イベントが来なくなるということはないので、ずっとイベントを待ち続ける）ので、`events` は実行されますが `timeline` は実行されることはありません！そんな…
 
-ということで今私たちがほしいのは、2 つの非同期関数を同時に `await` する機能です。それは `join` と呼ばれていて、[`futures`](https://crates.io/crates/futures) クレートに実装されています！
+ということで今私たちがほしいのは、2 つの非同期関数を同時に `await` する機能です。それは `join` と呼ばれていて、[`futures`](https://docs.rs/futures) クレートに実装されています！
 具体的には、こう:
 
 ```rust
@@ -705,7 +705,7 @@ async fn main() -> anyhow::Result<()> {
   - 標準ライブラリのドキュメント
   - これブックマークしておくとよし
 - [lib.rs](https://lib.rs/)
-  - [crates.io](https://crates.io/) よりクレートが探しやすいかも
+  - [crates.io](https://crates.io/index.html) よりクレートが探しやすいかも
 - [Rust Playground](https://play.rust-lang.org/)
   - オンラインコンパイラ; 標準ライブラリだけでなく人気のクレートも使える
 - [Rust Cookbook](https://rust-lang-nursery.github.io/rust-cookbook/)
