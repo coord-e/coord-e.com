@@ -313,7 +313,7 @@ mlml の制作にあたり、以下の資料を参考にしました。
 - [GitHub - ushitora-anqou/aqaml: Yet another tiny self-hosted OCaml compiler with an also tiny standard library.](https://github.com/ushitora-anqou/aqaml)
 - [はりぼて自作 OCaml コンパイラ AQaml でセルフホストしてみた | カオスの坩堝](https://anqou.net/poc/2019/01/27/post-2700/)
   - パーサとレキサは aqaml を参考に作りました。ありがとうございます。
-- [The OCaml system, release 4.07](https://caml.inria.fr/pub/docs/manual-ocaml/)
+- [The OCaml system, release 4.07](https://ocaml.org/manual/)
 - [速攻 MinCaml コンパイラ概説](http://esumii.github.io/min-caml/)
 - [OCaml の format (型安全な printf/scanf) の仕組み - 簡潔な Q](https://qnighy.hatenablog.com/entry/2017/01/26/215948)
 - [Compiler Explorer](https://godbolt.org/)

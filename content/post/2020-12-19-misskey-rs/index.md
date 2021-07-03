@@ -6,7 +6,7 @@ title: Rust から Misskey を扱うためのライブラリを書いた
 
 [embed](https://adventar.org/calendars/5026 "Misskey Advent Calendar 2020"){ description="Misskey のことであればなんでも結構です。サーバー運用のこと、API を使ってアプリを作ったり、フォークのことなどなど。" }
 
-こんにちは。Rust というプログラミング言語から [Misskey](https://github.com/syuilo/misskey) の API を扱うライブラリ [`misskey-rs`](https://github.com/coord-e/misskey-rs) を作りました。
+こんにちは。Rust というプログラミング言語から [Misskey](https://github.com/misskey-dev/misskey) の API を扱うライブラリ [`misskey-rs`](https://github.com/coord-e/misskey-rs) を作りました。
 
 この投稿では Rust でプログラムを書いたことがない人や Rust でのプログラミングを始めたての人に向けて、 `misskey-rs` の使い方を紹介します。
 もしあなたが Rust でのプログラミングに慣れているならば、[example](https://github.com/coord-e/misskey-rs/tree/develop/example) を眺めたり [API ドキュメント](https://docs.rs/misskey/0.2.0/misskey/)を参照するのが手っ取り早いかもしれません。
