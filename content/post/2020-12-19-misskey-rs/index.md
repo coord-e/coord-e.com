@@ -6,7 +6,7 @@ title: Rust から Misskey を扱うためのライブラリを書いた
 
 [embed](https://adventar.org/calendars/5026 "Misskey Advent Calendar 2020"){ description="Misskey のことであればなんでも結構です。サーバー運用のこと、API を使ってアプリを作ったり、フォークのことなどなど。" }
 
-こんにちは。Rust というプログラミング言語から [Misskey](https://github.com/syuilo/misskey) の API を扱うライブラリ [`misskey-rs`](https://github.com/coord-e/misskey-rs) を作りました。
+こんにちは。Rust というプログラミング言語から [Misskey](https://github.com/misskey-dev/misskey) の API を扱うライブラリ [`misskey-rs`](https://github.com/coord-e/misskey-rs) を作りました。
 
 この投稿では Rust でプログラムを書いたことがない人や Rust でのプログラミングを始めたての人に向けて、 `misskey-rs` の使い方を紹介します。
 もしあなたが Rust でのプログラミングに慣れているならば、[example](https://github.com/coord-e/misskey-rs/tree/develop/example) を眺めたり [API ドキュメント](https://docs.rs/misskey/0.2.0/misskey/)を参照するのが手っ取り早いかもしれません。
@@ -194,7 +194,7 @@ async fn main() -> anyhow::Result<()> {
 とはいえここで困ることはほとんどないので引っかからなくていいです。
 
 `-> anyhow::Result` というのは `anyhow::Result<()>` という型の値をこの関数から返す、ということを言っています。
-`Result` っていうからには結果なんだろう…そうですこれは結果で、 [`anyhow`](https://crates.io/crates/anyhow) というライブラリが提供する結果を表す型を用いています。
+`Result` っていうからには結果なんだろう…そうですこれは結果で、 [`anyhow`](https://docs.rs/anyhow) というライブラリが提供する結果を表す型を用いています。
 ただしここでいう結果というのは成功して値が返ってきたか失敗してエラーが返ってきたかのどちらかを保持している値です。
 様々なエラーがプログラムからは出てくるのですが、 `anyhow` の `Result` を使うとその様々なエラーを全部吸い込んでくれます。
 これは例を示すうえで関係のない複雑さを隠すために使っているので、引っかからないでください^[引っかからないでも書き進められるようにこれを使っているのもあります]。
@@ -257,7 +257,7 @@ Ok(())
 futures = "0.3"
 ```
 
-[futures](https://crates.io/crates/futures) は Rust の非同期エコシステムの中心にいるクレートで、今回はストリームを扱うために必要となります。
+[futures](https://docs.rs/futures) は Rust の非同期エコシステムの中心にいるクレートで、今回はストリームを扱うために必要となります。
 
 ```rust
 use futures::stream::TryStreamExt;
@@ -649,7 +649,7 @@ async fn main() -> anyhow::Result<()> {
 
 このように書いても `events` は終わらない^[もちろんエラーの場合を除く]（イベントが来なくなるということはないので、ずっとイベントを待ち続ける）ので、`events` は実行されますが `timeline` は実行されることはありません！そんな…
 
-ということで今私たちがほしいのは、2 つの非同期関数を同時に `await` する機能です。それは `join` と呼ばれていて、[`futures`](https://crates.io/crates/futures) クレートに実装されています！
+ということで今私たちがほしいのは、2 つの非同期関数を同時に `await` する機能です。それは `join` と呼ばれていて、[`futures`](https://docs.rs/futures) クレートに実装されています！
 具体的には、こう:
 
 ```rust
@@ -705,7 +705,7 @@ async fn main() -> anyhow::Result<()> {
   - 標準ライブラリのドキュメント
   - これブックマークしておくとよし
 - [lib.rs](https://lib.rs/)
-  - [crates.io](https://crates.io/) よりクレートが探しやすいかも
+  - [crates.io](https://crates.io/index.html) よりクレートが探しやすいかも
 - [Rust Playground](https://play.rust-lang.org/)
   - オンラインコンパイラ; 標準ライブラリだけでなく人気のクレートも使える
 - [Rust Cookbook](https://rust-lang-nursery.github.io/rust-cookbook/)

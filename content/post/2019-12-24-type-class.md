@@ -23,7 +23,7 @@ let rec eq_int a b =
   | n, m -> eq_int (n - 1) (m - 1)
 ```
 
-なるほど^[負の数のこと忘れてたけど面倒だからこれでええか？いいよ]。じゃあ `string` は^[構造的等値の話しかしない]？[標準ライブラリに](https://caml.inria.fr/pub/docs/manual-ocaml/libref/String.html)いい関数があったので借りてくる。
+なるほど^[負の数のこと忘れてたけど面倒だからこれでええか？いいよ]。じゃあ `string` は^[構造的等値の話しかしない]？[標準ライブラリに](https://ocaml.org/api/String.html)いい関数があったので借りてくる。
 
 ```ocaml
 let eq_string = String.equal
