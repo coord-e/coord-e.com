@@ -26,6 +26,9 @@ jobs:
           NETLIFY_SITE_ID: '${{ secrets.NETLIFY_SITE_ID }}'
           NETLIFY_AUTH_TOKEN: '${{ secrets.NETLIFY_AUTH_TOKEN }}'
       - uses: actions/github-script@v3
+        env:
+          NETLIFY_URL: '${{ steps.deploy_to_netlify.outputs.NETLIFY_URL }}'
+          NETLIFY_OUTPUT: '${{ steps.deploy_to_netlify.outputs.NETLIFY_OUTPUT }}'
         with:
           github-token: '${{ secrets.GITHUB_TOKEN }}'
           script: |
@@ -34,11 +37,11 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               body: [
-                  'Deploy preview ready: ${{ steps.deploy_to_netlify.outputs.NETLIFY_URL }}',
+                  `Deploy preview ready: ${process.env.NETLIFY_URL}`,
                   '<details>',
                   '',
                   '```',
-                  JSON.parse('${{ toJson(steps.deploy_to_netlify.outputs.NETLIFY_OUTPUT) }}'),
+                  process.env.NETLIFY_OUTPUT,
                   '```',
                   '</details>'
                 ].join('\n')
