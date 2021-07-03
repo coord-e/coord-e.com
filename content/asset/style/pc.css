@@ -26,10 +26,12 @@ body > footer {
 
 .ayano {
   position: fixed;
-  bottom: -40%;
-  left: 5%;
-  height: 130vh;
+  bottom: -38%;
+  left: 0;
   z-index: -1;
+  height: 125vh;
+  width: 33vw;
+  object-fit: contain;
 }
 
 .preference-chart {
