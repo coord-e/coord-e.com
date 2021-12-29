@@ -291,20 +291,11 @@ code .dt {
   vertical-align: middle;
   height: 3.5rem;
   margin: 0 0.7rem;
+  border-radius: 1.75rem;
 }
 
 .bio .badge {
   height: 1.5rem;
-}
-
-.costume-credit {
-  position: fixed;
-  bottom: 2%;
-  left: 2%;
-  z-index: -1;
-
-  color: #b2bec3;
-  font-size: 1rem;
 }
 
 .bio footer {
