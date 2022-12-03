@@ -1,29 +1,26 @@
-on:
-  push:
-    branches:
-      - main
+on: push
 
 name: deploy
 
 jobs:
   deploy:
     name: Deploy
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+      deployments: write
     steps:
-      - uses: actions/checkout@v2
-      - uses: cachix/install-nix-action@v12
-      - uses: cachix/cachix-action@v10
+      - uses: actions/checkout@v3
+      - uses: cachix/install-nix-action@v18
+      - uses: cachix/cachix-action@v12
         with:
           name: coord-e-com
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
       - run: nix-build
-      # We need to move files in order to allow access via docker's volume mount
-      - run: |
-          mkdir dist
-          cp -r result/* dist/
-      - uses: netlify/actions/cli@6c34c3fcafc69ac2e1d6dbf226560329c6dfc51b
+      - uses: cloudflare/pages-action@1
         with:
-          args: deploy --dir=dist --prod
-        env:
-          NETLIFY_SITE_ID: '${{ secrets.NETLIFY_SITE_ID }}'
-          NETLIFY_AUTH_TOKEN: '${{ secrets.NETLIFY_AUTH_TOKEN }}'
+          apiToken: '${{ secrets.CLOUDFLARE_API_TOKEN }}'
+          accountId: 0bb64cf424cd30c7424b29d601347db8
+          projectName: coord-e-com
+          directory: result
+          gitHubToken: '${{ secrets.GITHUB_TOKEN }}'

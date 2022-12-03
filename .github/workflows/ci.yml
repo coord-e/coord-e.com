@@ -5,20 +5,20 @@ name: CI
 jobs:
   lint:
     name: Lint contents
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v2
-      - uses: cachix/install-nix-action@v12
+      - uses: actions/checkout@v3
+      - uses: cachix/install-nix-action@v18
       - run: nix-env -f ./nix/pkgs.nix -iA nodejs
       - run: cd content; npm install
       - run: cd content; npm run lint
   build:
     name: Build contents
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v2
-      - uses: cachix/install-nix-action@v12
-      - uses: cachix/cachix-action@v10
+      - uses: actions/checkout@v3
+      - uses: cachix/install-nix-action@v18
+      - uses: cachix/cachix-action@v12
         with:
           name: coord-e-com
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
@@ -27,31 +27,31 @@ jobs:
       - run: |
           mkdir dist
           cp -r result/* dist/
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: site
           path: dist
   ormolu:
     name: Run Ormolu
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v2
-      - uses: cachix/install-nix-action@v12
+      - uses: actions/checkout@v3
+      - uses: cachix/install-nix-action@v18
       - run: nix-env -f ./nix/pkgs.nix -iA ormolu
       - run: ormolu --mode check $(find . -name '*.hs')
   hlint:
     name: Run HLint
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v2
-      - uses: cachix/install-nix-action@v12
+      - uses: actions/checkout@v3
+      - uses: cachix/install-nix-action@v18
       - run: nix-env -f ./nix/pkgs.nix -iA hlint
       - run: hlint $(find . -name '*.hs')
   nixfmt:
     name: Run nixfmt
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v2
-      - uses: cachix/install-nix-action@v12
+      - uses: actions/checkout@v3
+      - uses: cachix/install-nix-action@v18
       - run: nix-env -f ./nix/pkgs.nix -iA nixfmt
       - run: nixfmt --check $(find . -name '*.nix')
