@@ -7,7 +7,7 @@ index a68eb54..cf1b067 100644
      , filepath         ^>=1.4.1.2
      , latex-svg-image  ^>=0.2
 -    , pandoc-types     ^>=1.17.6.1 || ^>=1.20
-+    , pandoc-types     ^>=1.17.6.1 || ^>=1.20 || ^>=1.21
++    , pandoc-types     ^>=1.17.6.1 || ^>=1.20 || ^>=1.21 || ^>=1.22
      , text             ^>=1.2.3.0
  
  executable latex-svg-filter
