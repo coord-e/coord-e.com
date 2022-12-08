@@ -40,4 +40,5 @@ executable generate-coord-e-com
         latex-svg-image ^>=0.2,
         typed-process ^>=0.2,
         containers ^>= 0.6,
-        tagsoup ^>=0.14
+        tagsoup ^>=0.14,
+        word-wrap ^>=0.4

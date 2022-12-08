@@ -6,11 +6,10 @@ in stdenv.mkDerivation {
   name = "coord-e-com";
   src = ./content;
   nativeBuildInputs =
-    [ graphviz (callPackage ./nix/texlive-combined.nix { }) generator ];
-  buildPhase = ''
-    export LANG=C.UTF-8
-    export GENERATOR_COMMIT_ID=${lib.commitIdFromGitRepo ./.git}
-    ${generator}/bin/generate-coord-e-com build
-  '';
+    [ graphviz (callPackage ./nix/texlive-combined.nix { }) generator librsvg ];
+  LANG = "C.UTF-8";
+  GENERATOR_COMMIT_ID = lib.commitIdFromGitRepo ./.git;
+  FONTCONFIG_FILE = makeFontsConf { fontDirectories = [ noto-fonts-cjk ]; };
+  buildPhase = "${generator}/bin/generate-coord-e-com build";
   installPhase = "cp -a _site $out";
 }
