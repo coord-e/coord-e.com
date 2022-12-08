@@ -56,7 +56,14 @@ main = do
           >>= subDirUrls
           >>= saveSnapshot "content"
           >>= loadAndApplyTemplate "template/post.html" defaultContext
-          >>= loadAndApplyTemplate "template/default.html" (gitCommitContext <> fragmentsContext <> defaultContext)
+          >>= loadAndApplyTemplate
+            "template/default.html"
+            ( openGraphContext
+                <> twitterCardContext
+                <> gitCommitContext
+                <> fragmentsContext
+                <> defaultContext
+            )
           >>= relativizeUrls
 
     match ("post/*.md" .||. "post/*/index.md") $
@@ -175,6 +182,20 @@ wrappedSvgTitleContext = field "title" f
     joinLines (h : t) = T.concat $ tspan xPos "0em" h : map (tspan xPos "1em") t
     joinLines [] = ""
     tspan x y child = "<tspan x=\"" <> x <> "\" dy=\"" <> y <> "\">" <> child <> "</tspan>"
+
+openGraphContext :: Context String
+openGraphContext = openGraphField "opengraph" ctx
+  where
+    ctx = field "og-image" ogImageField <> constField "root" siteRoot <> defaultContext
+    ogImageField item = do
+      Just path <- getRoute $ setVersion (Just "og-image") (itemIdentifier item)
+      pure $ siteRoot <> toUrl path
+    siteRoot = "https://coord-e.com"
+
+twitterCardContext :: Context String
+twitterCardContext = twitterCardField "twitter" ctx
+  where
+    ctx = constField "twitter-creator" "@coord_e" <> defaultContext
 
 getGitCommitContext :: IO (Context String)
 getGitCommitContext = constField "commit" <$> getCurrentCommit
