@@ -8,6 +8,7 @@ mkShell {
     graphviz
     (callPackage ./nix/texlive-combined.nix { })
     (callPackage ./generator { })
+    librsvg
     # for textlint/prettier
     nodejs
     # formatting
@@ -15,7 +16,6 @@ mkShell {
     hlint
     ormolu
   ];
-  shellHook = ''
-    export LANG=C.UTF-8
-  '';
+  FONTCONFIG_FILE = makeFontsConf { fontDirectories = [ noto-fonts-cjk ]; };
+  LANG = "C.UTF-8";
 }

@@ -6,6 +6,9 @@
 module Main where
 
 import Control.Monad ((<=<))
+import qualified Data.Text as T (concat, pack, unpack)
+import qualified Data.Text.Lazy as TL (pack)
+import qualified Data.Text.Lazy.Encoding as TL (encodeUtf8)
 import Hakyll
 import System.Environment (lookupEnv)
 import System.FilePath.Posix
@@ -25,6 +28,7 @@ import Text.Pandoc.Extensions (Extension (..), enableExtension, pandocExtensions
 import Text.Pandoc.Options (ReaderOptions (..), WriterOptions (..))
 import Text.Pandoc.UTF8 (toStringLazy)
 import Text.TableOfContents.Pandoc (addToC)
+import Text.Wrap (WrapSettings (..), defaultWrapSettings, wrapTextToLines)
 
 main :: IO ()
 main = do
@@ -52,8 +56,26 @@ main = do
           >>= subDirUrls
           >>= saveSnapshot "content"
           >>= loadAndApplyTemplate "template/post.html" defaultContext
-          >>= loadAndApplyTemplate "template/default.html" (gitCommitContext <> fragmentsContext <> defaultContext)
+          >>= loadAndApplyTemplate
+            "template/default.html"
+            ( openGraphContext
+                <> twitterCardContext
+                <> gitCommitContext
+                <> fragmentsContext
+                <> defaultContext
+            )
           >>= relativizeUrls
+
+    match ("post/*.md" .||. "post/*/index.md") $
+      version "og-image" $ do
+        route $
+          gsubRoute "post/" (const "image/og/")
+            `composeRoutes` unIndexRoute
+            `composeRoutes` setExtension "png"
+        compile $
+          makeItem ""
+            >>= loadAndApplyTemplate "template/og_image.svg" wrappedSvgTitleContext
+            >>= withItemBody (unixFilterLBS "rsvg-convert" ["-w", "1200"] . TL.encodeUtf8 . TL.pack)
 
     create ["post/index.html"] do
       route idRoute
@@ -133,7 +155,7 @@ postsContext :: Context String
 postsContext = listField "posts" defaultContext (recentFirst =<< loadAll allPosts)
 
 allPosts :: Pattern
-allPosts = "post/*.md" .||. "post/*/index.md"
+allPosts = ("post/*.md" .||. "post/*/index.md") .&&. hasNoVersion
 
 indexContext :: Context String
 indexContext = field "title" f <> field "index" getIndexPath
@@ -143,6 +165,37 @@ indexContext = field "title" f <> field "index" getIndexPath
     removeIndex path
       | takeFileName path == "index.html" = dropFileName path
       | otherwise = path
+
+-- XXX: no way (at least with rsvg-convert) to perform word wrap in SVG
+-- TODO: use less ad-hoc way to insert multiline string into SVG
+wrappedSvgTitleContext :: Context String
+wrappedSvgTitleContext = field "title" f
+  where
+    f item = do
+      title <- getMetadataField' (itemIdentifier item) "title"
+      pure . T.unpack . joinLines . wrapTextToLines wrapSettings 11 $ T.pack title
+    wrapSettings =
+      defaultWrapSettings
+        { breakLongWords = True
+        }
+    xPos = "1em" -- FIXME
+    joinLines (h : t) = T.concat $ tspan xPos "0em" h : map (tspan xPos "1em") t
+    joinLines [] = ""
+    tspan x y child = "<tspan x=\"" <> x <> "\" dy=\"" <> y <> "\">" <> child <> "</tspan>"
+
+openGraphContext :: Context String
+openGraphContext = openGraphField "opengraph" ctx
+  where
+    ctx = field "og-image" ogImageField <> constField "root" siteRoot <> defaultContext
+    ogImageField item = do
+      Just path <- getRoute $ setVersion (Just "og-image") (itemIdentifier item)
+      pure $ siteRoot <> toUrl path
+    siteRoot = "https://coord-e.com"
+
+twitterCardContext :: Context String
+twitterCardContext = twitterCardField "twitter" ctx
+  where
+    ctx = constField "twitter-creator" "@coord_e" <> defaultContext
 
 getGitCommitContext :: IO (Context String)
 getGitCommitContext = constField "commit" <$> getCurrentCommit
