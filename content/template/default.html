@@ -27,7 +27,9 @@
     <link rel="canonical" href="$canonical$" />
     $endif$
     <!-- prettier-ignore -->
-    $if(opengraph)$$opengraph$$endif$$if(twitter)$$twitter$$endif$
+    $if(opengraph)$$opengraph$$endif$
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta property="twitter:creator" content="@coord_e" />
 
     <title>$title$ - coord-e.com</title>
   </head>

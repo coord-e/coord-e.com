@@ -59,7 +59,6 @@ main = do
           >>= loadAndApplyTemplate
             "template/default.html"
             ( openGraphContext
-                <> twitterCardContext
                 <> gitCommitContext
                 <> fragmentsContext
                 <> defaultContext
@@ -191,11 +190,6 @@ openGraphContext = openGraphField "opengraph" ctx
       Just path <- getRoute $ setVersion (Just "og-image") (itemIdentifier item)
       pure $ siteRoot <> toUrl path
     siteRoot = "https://coord-e.com"
-
-twitterCardContext :: Context String
-twitterCardContext = twitterCardField "twitter" ctx
-  where
-    ctx = constField "twitter-creator" "@coord_e" <> defaultContext
 
 getGitCommitContext :: IO (Context String)
 getGitCommitContext = constField "commit" <$> getCurrentCommit
