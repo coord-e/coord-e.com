@@ -3,7 +3,7 @@ title: iPad で PCDJ
 og-description: 明らかにタッチインターフェースを備えている iPad を PCDJ 機材の代わりにできないか検討し、実際にある程度の体験を得ることができたのでここではそれを紹介します。
 ---
 
-こんにちは。天久保 Advent Calendar 2022 14 日目の記事です。
+こんにちは。天久保 Advent Calendar 2022 の 14 日目の記事です。
 
 [embed](https://adventar.org/calendars/8233 "天久保 Advent Calendar 2022 - Adventar"){ description="茨城県つくば市の町域であるところの天久保とは無関係な任意団体" }
 
