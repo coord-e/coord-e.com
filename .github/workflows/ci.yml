@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
-      - uses: cachix/install-nix-action@v18
+      - uses: cachix/install-nix-action@v22
       - run: nix-env -f ./nix/pkgs.nix -iA nodejs
       - run: cd content; npm install
       - run: cd content; npm run lint
@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
-      - uses: cachix/install-nix-action@v18
+      - uses: cachix/install-nix-action@v22
       - uses: cachix/cachix-action@v12
         with:
           name: coord-e-com
@@ -36,7 +36,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
-      - uses: cachix/install-nix-action@v18
+      - uses: cachix/install-nix-action@v22
       - run: nix-env -f ./nix/pkgs.nix -iA ormolu
       - run: ormolu --mode check $(find . -name '*.hs')
   hlint:
@@ -44,7 +44,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
-      - uses: cachix/install-nix-action@v18
+      - uses: cachix/install-nix-action@v22
       - run: nix-env -f ./nix/pkgs.nix -iA hlint
       - run: hlint $(find . -name '*.hs')
   nixfmt:
@@ -52,6 +52,6 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
-      - uses: cachix/install-nix-action@v18
+      - uses: cachix/install-nix-action@v22
       - run: nix-env -f ./nix/pkgs.nix -iA nixfmt
       - run: nixfmt --check $(find . -name '*.nix')
