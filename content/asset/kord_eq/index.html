@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link
+      href="https://fonts.googleapis.com/css?family=Noto+Sans+JP:400&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Overpass+Mono:normal,bold&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Overpass:bold&display=swap"
+      rel="stylesheet"
+    />
+    <link href="/style/style.css" rel="stylesheet" />
+    <link
+      href="/style/pc.css"
+      media="screen and (min-width: 900px) and (min-aspect-ratio: 7/6)"
+      rel="stylesheet"
+    />
+    <link
+      href="/style/mobile.css"
+      media="screen and (max-width: 899px), screen and (max-aspect-ratio: 7/6)"
+      rel="stylesheet"
+    />
+
+    <script>
+      function setHref() {
+        const contact = document.getElementsByClassName("contact-email")[0];
+        const email = "kordeq@" + window.location.hostname;
+        contact.innerText = email;
+        contact.setAttribute("href", "mailto:" + email);
+      }
+      document.addEventListener("DOMContentLoaded", setHref);
+    </script>
+    <title>coord_e</title>
+  </head>
+  <body>
+    <main role="main">
+      <article class="bio">
+        <section>
+          <h1 id="kord_eq">
+            <a href="#kord_eq">こでい (kord_eq)</a>
+            <img src="/image/coord2e.png" alt="icon" class="icon" />
+          </h1>
+          <p> パソコン以外もやっていく気持ち </p>
+          <dl>
+            <dt>social</dt>
+            <dd><a href="https://twitter.com/kord_eq">twitter.com/kord_eq</a></dd>
+            <dt>dj mix</dt>
+            <dd
+              ><a href="https://www.mixcloud.com/kord_eq"
+                >www.mixcloud.com/kord_eq</a
+              ></dd
+            >
+          </dl>
+        </section>
+        <section class="contact">
+          <h2 id="contact"><a href="#contact">Contact</a></h2>
+          <a class="contact-email"></a>
+        </section>
+      </article>
+    </main>
+  </body>
+</html>
