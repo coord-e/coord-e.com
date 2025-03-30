@@ -5,22 +5,21 @@ name: deploy
 jobs:
   deploy:
     name: Deploy
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     permissions:
       contents: read
       deployments: write
     steps:
-      - uses: actions/checkout@v3
-      - uses: cachix/install-nix-action@v22
-      - uses: cachix/cachix-action@v12
+      - uses: actions/checkout@v4
+      - uses: cachix/install-nix-action@v31
+      - uses: cachix/cachix-action@v16
         with:
           name: coord-e-com
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
       - run: nix-build
-      - uses: cloudflare/pages-action@1
+      - uses: cloudflare/wrangler-action@v3
         with:
           apiToken: '${{ secrets.CLOUDFLARE_API_TOKEN }}'
           accountId: 0bb64cf424cd30c7424b29d601347db8
-          projectName: coord-e-com
-          directory: result
+          command: pages deploy result/ --project-name=coord-e-com
           gitHubToken: '${{ secrets.GITHUB_TOKEN }}'
