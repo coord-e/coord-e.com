@@ -3,7 +3,7 @@
 	"features": {
 		"ghcr.io/devcontainers/features/nix:1": {
 			"packages": "cachix",
-			"version": "2.21.1",
+			"version": "latest",
 			"extraNixConfig": "extra-substituters = https://coord-e-com.cachix.org,extra-trusted-public-keys = coord-e-com.cachix.org-1:OTKFq7NphlUWfh2sdXvfuCR2tSb65h7f2di3CrpeHGI="
 		}
 	}
