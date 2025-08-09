@@ -9,7 +9,7 @@ rekordbox に搭載されている ROLL というエフェクトがおもしろ�
 
 ## 基本
 
-まず、rekordbox にある ROLL には 2 種類あります。
+まず、rekordbox で利用できる ROLL エフェクトには 2 種類あります。
 
 - PAD FX の ROLL
 - BEAT FX の ROLL
