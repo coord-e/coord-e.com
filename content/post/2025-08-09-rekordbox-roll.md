@@ -14,11 +14,11 @@ rekordbox に搭載されている ROLL というエフェクトがおもしろ�
 - PAD FX の ROLL
 - BEAT FX の ROLL
 
-どちらも、ON にしたタイミングで入力を録音し、指定した拍の倍率の長さでループしたものを再生します。PAD FX の場合は押している間は完全にチャンネルを乗っ取る（本来の音は出ない）一方で、BEAT FX の場合は Level でプレイヤーの音との割合をクロスフェードできるようになっています。 真ん中で ROLL 側が 100%, 左に振り切ってプレイヤー 100% です。右に回しても何も起きない気がします。基本的な挙動は下の動画の 3:00-3:40 がわかりやすいです。動画では XDJ を使っていますが、DDJ + rekordbox でもおおむね同じです（ただし、3:40 の後にやってるチャンネル間の移動は少なくとも DDJ-FLX4 + rekordbox ではできません）。
+どちらも、ON にしたタイミングで入力を録音し、指定した拍の倍率の長さでループしたものを再生します。PAD FX の場合は押している間は完全にチャンネルを乗っ取る（本来の音は出ない）一方で、BEAT FX の場合は Level でプレイヤーの音との割合をクロスフェードできるようになっています。 真ん中で ROLL 側が 100%, 左に振り切ってプレイヤー 100% です。右に回しても何も起きない気がします。基本的な挙動は、たとえば下の動画の 3:00-3:40 で確認できます（ただし、3:40 の後にやってるチャンネル間の移動は少なくとも DDJ-FLX4 + rekordbox ではできません）。
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/iwV6RPZCW4o?si=EmeLS11B2ES4E0Zn&amp;start=179" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
-つまり ROLL からの再生はプレイヤーからの出力とは別で、ROLL が出ている間に曲の再生を止めても音が流れ続けます。そのため、たとえば 4 Beat とかで BEAT FX の ROLL を 100% 入れて別の曲をロードし、タイミングよく再生した状態で FX LEVEL でクロスフェードしてあげると、1 デッキだけで DJ ができたりします。
+おもしろいことに、ROLL からの再生はプレイヤーからの出力とは別で、ROLL が出ている間に曲の再生を止めても音が流れ続けます。そのため、たとえば 4 Beat とかで BEAT FX の ROLL を 100% 入れて別の曲をロードし、タイミングよく再生した状態で FX LEVEL でクロスフェードしてあげると、1 デッキだけで DJ ができたりします。
 
 ## ルーティング
 
