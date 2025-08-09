@@ -18,6 +18,10 @@ rekordbox に搭載されている ROLL というエフェクトがおもしろ�
 
 ROLL からの再生はプレイヤーからの出力とは別で、ROLL が出ている間に曲の再生を止めても音が流れ続けます。そのため、たとえば 4 Beat とかで BEAT FX の ROLL を 100% 入れて別の曲をロードし、タイミングよく再生した状態で FX LEVEL でクロスフェードしてあげると、1 デッキだけで DJ ができたりします。
 
+下の動画の 3:00 以降がわかりやすいです。動画では XDJ を使っていますが、DDJ + rekordbox でもおおむね同じです。
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/iwV6RPZCW4o?si=EmeLS11B2ES4E0Zn&amp;start=179" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
 ## ルーティング
 
 Player → Trim → EQ → ROLL (PAD FX) → ROLL (BEAT FX) → その他 FX いろいろ → Ch. CUE → Ch. Fader → その他いろいろという順番のようです。 PAD FX の ROLL の出力に BEAT FX の ROLL をかけることはできますが逆はできません。また、どちらの ROLL の出力に対しても CFX や ROLL 以外の BEAT FX, PAD FX がかかります（全部はためしていませんが）。一方で ROLL の出力に対しては EQ や Trim はかかりません。ROLL を 100% で流しているときに Smart CFX を使うと、プレイヤー側の処理だけが隠れてミキサー側の処理だけが入るのでおもしろいです。
