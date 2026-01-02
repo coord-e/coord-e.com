@@ -51,3 +51,8 @@ header nav .path-fragment::before {
   content: "\A  ";
   white-space: pre;
 }
+
+table th,
+table td {
+  padding: 0.5rem;
+}

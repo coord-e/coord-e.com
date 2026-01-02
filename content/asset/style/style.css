@@ -332,3 +332,35 @@ blockquote {
 blockquote > p {
   margin: 0;
 }
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1.5rem 0;
+  background-color: #ffffff;
+  border: 1px solid #b2bec3;
+  font-size: 0.9rem;
+}
+
+table th,
+table td {
+  padding: 0.8rem;
+  text-align: left;
+  border: 1px solid #b2bec3;
+  font-size: 0.9rem;
+  line-height: 1.2rem;
+}
+
+table th {
+  background-color: #f0f0f0;
+  font-weight: bold;
+  color: #2d3436;
+}
+
+table tr:hover {
+  background-color: #f8f8f8;
+}
+
+table tbody tr:nth-child(even) {
+  background-color: #fafafa;
+}
